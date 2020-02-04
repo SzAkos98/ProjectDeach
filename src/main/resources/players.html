@@ -1,0 +1,281 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Deac-Hackers</title>
+    <meta charset="UTF-8">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <script src="https://use.fontawesome.com/09ed8dbec8.js"></script>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/c935a95f4d.js"></script>
+
+    <script src="javascripts/growl/jquery.growl.js" type="text/javascript"></script>
+    <link href="stylesheets/growl/jquery.growl.css" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href="stylesheets/players.css">
+    <script src="javascripts/players.js"></script>
+
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+</head>
+<body>
+
+<div class="page-background"></div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-lg-2 menu">
+
+            <table class="table table-hover sticky">
+                <tr>
+                    <td>
+                        <div class="logo btn-md btn-block" id="logomenu">
+                            <h3>
+                                Deac-Hackers
+                            </h3>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="btn-md btn-block" id="homemenu">
+                            <i aria-hidden="true" class="fa fa-home"></i>
+                            Főoldal
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="btn-md btn-block" id="palyermenu">
+                            <i aria-hidden="true" class="fas fa-users"></i>
+                            Tagjaink
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-10 page-content">
+            <div id="members" class="table-responsive">
+                <h1>Tagjaink</h1>
+                <form class="form-control controls">
+                    <button class="btn btn-dark selectAll" type="button" id="selectAllMember" data-toggle="tooltip"
+                            data-placement="top" title="Összes kijelölése">
+                        <i class="fas fa-check-double" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-dark add" type="button" id="addMember" data-toggle="tooltip"
+                            data-placement="top" title="Új tag hozzáadása">
+                        <i class="fas fa-user-plus" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-dark edit" type="button" id="editSelectedMember" data-toggle="tooltip"
+                            data-placement="top" title="Kiválasztott tag módosítása">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn btn-dark delete" type="button" id="deleteSelectedMember" data-toggle="tooltip"
+                            data-placement="top" title="Kiválasztott tag(ok) törlése ">
+                        <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                    </button>
+                    <div class="pager" style="display: inline; float: right;">
+                        <button class="btn btn-dark delete" type="button" id="firstPageBtnMembers" data-toggle="tooltip"
+                                data-placement="top" title="Első oldal.">
+                            <i class="fas fa-angle-double-left"></i>
+                        </button>
+                        <button class="btn btn-dark delete" type="button" id="prevPageBtnMembers" data-toggle="tooltip"
+                                data-placement="top" title="Előző oldal.">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-dark delete" type="button" id="nextPageBtnMembers" data-toggle="tooltip"
+                                data-placement="top" title="Következő oldal.">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button class="btn btn-dark delete" type="button" id="lastPageBtnMembers" data-toggle="tooltip"
+                                data-placement="top" title="Utolsó oldal.">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
+                    </div>
+                </form>
+                <table id="membersTable" class="table table-md table-dark">
+                    <thead>
+                    <tr>
+                        <th>Azonosító szám</th>
+                        <th>Név</th>
+                        <th>E-mail cím</th>
+                        <th>Születési dátum</th>
+                        <th>Lakcím</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="addMemberModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Új tag hozzáadása</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="memberForm">
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberName" placeholder="Név"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberAddress" placeholder="Lakcím" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberMail" placeholder="Játékos e-mail címe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberBirthDate" placeholder="Játékos születési dátuma" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberGuardianName" placeholder="Gondviselő neve" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberGuardianMail" placeholder="Gondviselő e-mail címe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberGameName" placeholder="Játék neve" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberInGameNickname" placeholder="Játékbeli becenév" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberStatus" placeholder="Játékos státusza" required>
+                    </div>
+
+                    <input type="submit" style="display: none" id="fakeMemberSubmit">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Bezár</button>
+                <button type="button" id="addMemberToDB" class="btn btn-success">Hozzáadás</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="editMemberModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Kiválasztott tag adatainak módosítása</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="memberEditForm">
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberName" placeholder="Név"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberAddress" placeholder="Lakcím" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberMail" placeholder="Játékos e-mail címe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberBirthDate" placeholder="Játékos születési dátuma" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberGuardianName" placeholder="Gondviselő neve" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberGuardianMail" placeholder="Gondviselő e-mail címe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberGameName" placeholder="Játék neve" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberInGameNickname" placeholder="Játékbeli becenév" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="col-sm-12" name="newMemberStatus" placeholder="Játékos státusza" required>
+                    </div>
+
+                    <input type="submit" style="display: none" id="fakeEditMemberSubmit">
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Bezár</button>
+                <button type="button" class="btn btn-primary" id="editMemberSubmit">Módosít</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="deletePersonModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Tag tölése</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p>Biztos törölni szeretnéd?</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Bezár</button>
+                <button type="button" class="btn btn-danger" id="deletePersonSubmit">Törlés</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

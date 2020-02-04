@@ -1,0 +1,150 @@
+body{
+    overflow: hidden;
+}
+
+.list-group-item {
+    border-radius: 5px !important;
+    margin: 0.1em;
+}
+
+.table-md{
+    border-radius: 5px !important;
+
+}
+
+.table-md thead th {
+    border: unset;
+}
+
+.table-md tbody td:first-child{
+    border-radius: 5px 0px 0px 5px;
+}
+
+.table-md tbody td:last-child{
+    border-radius: 0px 5px 5px 0px;
+}
+.container-fluid {
+    overflow: auto;
+}
+.menu {
+    padding: unset;
+    font-weight: bold;
+    text-shadow:0 0 5px  rgba(0, 55, 255, 0.81);
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 5px;
+}
+
+.form-control.light{
+    background-color: white;
+}
+
+.menuDarkener{
+    height: 100%;
+    min-height: 40%;
+    opacity: 0.4;
+    background-color: #303331;
+
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px black;
+}
+
+.sticky div{
+    color: lightgoldenrodyellow;
+}
+
+.sticky td {
+    border: unset;
+    padding-left: 1em;
+}
+
+.sticky{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    cursor: pointer;
+}
+.logo {
+}
+
+.row {
+    height: 100%;
+}
+
+.fa-hard-hat{
+    color: orange;
+}
+
+.fa-code{
+    color: darkcyan;
+}
+
+.form-control{
+    background-color: #343a40;
+    border: unset;
+}
+
+.page-background{
+    background-image:  linear-gradient(
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)
+    ),url("https://scontent.fbud5-1.fna.fbcdn.net/v/t1.0-9/p960x960/55769895_624783864659807_6127682957063749632_o.png?_nc_cat=106&_nc_ohc=j3VNXKhpYHwAX-_LaNS&_nc_ht=scontent.fbud5-1.fna&oh=1f8891416ba634a68407f6528c4a2ef4&oe=5ECF6B47");
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%
+}
+
+.page-content {
+    padding: 1em;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    padding: 0.2em;
+}
+
+h1, h4, label  {
+    color: white;
+    text-shadow:0 0 5px rgba(0, 55, 255, 0.81)
+}
+.controls {
+    padding: 0.2em;
+}
+
+.selectAll:hover {
+    color: greenyellow;
+}
+
+.rent:hover {
+    color: blue;
+}
+
+.add:hover {
+    color: green;
+}
+
+.edit:hover {
+    color: darkcyan;
+}
+
+.delete:hover {
+    color: red;
+}
+
+tr {
+    border-radius: 1px;
+}
+#booksTable tr td:last-child,
+#membersTable tr td:last-child{
+    padding: 6px;
+}
+.selected td {
+    background-color: rgb(0, 123, 255);
+}
