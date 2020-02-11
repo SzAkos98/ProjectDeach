@@ -25,4 +25,8 @@ function bindMenu(){
         window.location = "players.html";
     });
 
+    $("#historymenu").parent().on("click", function () {
+        window.location="history.html";
+    });
+
 }

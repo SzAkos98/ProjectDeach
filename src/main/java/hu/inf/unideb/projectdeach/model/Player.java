@@ -4,51 +4,52 @@ import com.fasterxml.jackson.annotation.JsonView;
 import hu.inf.unideb.projectdeach.views.Views;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "players")
 public class Player {
 
     @Id
-    @Column(name = "id")
+    @Column(name="id")
     @JsonView(Views.Base.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playerId;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String playerName;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String playerAddress;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String playerMail;
 
-    @Column
     @JsonView(Views.Base.class)
-    private Long playerBirthDate;
+    @Column
+    private Date playerBirthDate;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String guardianName;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String guardianMail;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String gameName;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String inGameNickname;
 
-    @Column
     @JsonView(Views.Base.class)
+    @Column
     private String playerState;
 
     public Player() {
@@ -56,7 +57,7 @@ public class Player {
     }
 
     public Player(Long playerId, String playerName, String playerAddress,
-                      String playerMail, Long playerBirthDate,
+                      String playerMail, Date playerBirthDate,
                       String guardianName, String guardianMail, String gameName,
                       String inGameNickname, String playerState) {
         this.playerId = playerId;
@@ -75,12 +76,20 @@ public class Player {
         this.playerId = playerId;
     }
 
-    public long getPlayerId() {
+    public Long getPlayerId() {
+        return playerId;
+    }
+
+    public long getId() {
         return playerId;
     }
 
     public void setPlayerId(Long playerId) {
         this.playerId = playerId;
+    }
+
+    public void setId(Long id) {
+        this.playerId = id;
     }
 
     public String getPlayerName() {
@@ -107,11 +116,11 @@ public class Player {
         this.playerMail = playerMail;
     }
 
-    public Long getPlayerBirthDate() {
+    public Date getPlayerBirthDate() {
         return playerBirthDate;
     }
 
-    public void setPlayerBirthDate(Long playerBirthDate) {
+    public void setPlayerBirthDate(Date playerBirthDate) {
         this.playerBirthDate = playerBirthDate;
     }
 

@@ -1,12 +1,14 @@
 package hu.inf.unideb.projectdeach.dto;
 
+import java.sql.Date;
+
 public class PlayerDTO {
 
     private Long playerId;
     private String playerName;
     private String playerAddress;
     private String playerMail;
-    private Long playerBirthDate;
+    private Date playerBirthDate;
     private String guardianName;
     private String guardianMail;
     private String gameName;
@@ -17,7 +19,7 @@ public class PlayerDTO {
     }
 
     public PlayerDTO(Long playerId, String playerName, String playerAddress,
-                     String playerMail, Long playerBirthDate,
+                     String playerMail, Date playerBirthDate,
                      String guardianName, String guardianMail, String gameName,
                      String inGameNickname, String playerState) {
         this.playerId = playerId;
@@ -64,11 +66,11 @@ public class PlayerDTO {
         this.playerMail = playerMail;
     }
 
-    public Long getPlayerBirthDate() {
+    public Date getPlayerBirthDate() {
         return playerBirthDate;
     }
 
-    public void setPlayerBirthDate(Long playerBirthDate) {
+    public void setPlayerBirthDate(Date playerBirthDate) {
         this.playerBirthDate = playerBirthDate;
     }
 

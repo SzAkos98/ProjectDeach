@@ -20,8 +20,8 @@
     <script src="javascripts/growl/jquery.growl.js" type="text/javascript"></script>
     <link href="stylesheets/growl/jquery.growl.css" rel="stylesheet" type="text/css"/>
 
-    <link rel="stylesheet" href="stylesheets/players.css">
-    <script src="javascripts/players.js"></script>
+    <link rel="stylesheet" href="stylesheets/history.css">
+    <script src="javascripts/history.js"></script>
 
     <meta content="width=device-width, initial-scale=1" name="viewport">
 </head>
@@ -60,56 +60,67 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <div class="btn-md btn-block" id="historymenu">
+                            <i class="fa fa-trophy" aria-hidden="true"></i>
+                            Versenyeink
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
         <div class="col-md-10 page-content">
-            <div id="members" class="table-responsive">
-                <h1>Tagjaink</h1>
+            <div id="history" class="table-responsive">
+                <h1>Versenyeink</h1>
                 <form class="form-control controls">
-                    <button class="btn btn-dark selectAll" type="button" id="selectAllMember" data-toggle="tooltip"
+                    <button class="btn btn-dark selectAll" type="button" id="selectAllHistory" data-toggle="tooltip"
                             data-placement="top" title="Összes kijelölése">
                         <i class="fas fa-check-double" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-dark add" type="button" id="addMember" data-toggle="tooltip"
-                            data-placement="top" title="Új tag hozzáadása">
-                        <i class="fas fa-user-plus" aria-hidden="true"></i>
+                    <button class="btn btn-dark add" type="button" id="addHistory" data-toggle="tooltip"
+                            data-placement="top" title="Új verseny hozzáadása">
+                        <i class="fa fa-trophy" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-dark edit" type="button" id="editSelectedMember" data-toggle="tooltip"
-                            data-placement="top" title="Kiválasztott tag módosítása">
+                    <button class="btn btn-dark edit" type="button" id="editSelectedHistory" data-toggle="tooltip"
+                            data-placement="top" title="Kiválasztott verseny módosítása">
                         <i class="fas fa-edit" aria-hidden="true"></i>
                     </button>
-                    <button class="btn btn-dark delete" type="button" id="deleteSelectedMember" data-toggle="tooltip"
-                            data-placement="top" title="Kiválasztott tag(ok) törlése ">
+                    <button class="btn btn-dark delete" type="button" id="deleteSelectedHistory" data-toggle="tooltip"
+                            data-placement="top" title="Kiválasztott verseny(ek) törlése ">
                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
                     </button>
                     <div class="pager" style="display: inline; float: right;">
-                        <button class="btn btn-dark delete" type="button" id="firstPageBtnMembers" data-toggle="tooltip"
+                        <button class="btn btn-dark delete" type="button" id="firstPageBtnHistory" data-toggle="tooltip"
                                 data-placement="top" title="Első oldal.">
                             <i class="fas fa-angle-double-left"></i>
                         </button>
-                        <button class="btn btn-dark delete" type="button" id="prevPageBtnMembers" data-toggle="tooltip"
+                        <button class="btn btn-dark delete" type="button" id="prevPageBtnHistory" data-toggle="tooltip"
                                 data-placement="top" title="Előző oldal.">
                             <i class="fas fa-chevron-left"></i>
                         </button>
-                        <button class="btn btn-dark delete" type="button" id="nextPageBtnMembers" data-toggle="tooltip"
+                        <button class="btn btn-dark delete" type="button" id="nextPageBtnHistory" data-toggle="tooltip"
                                 data-placement="top" title="Következő oldal.">
                             <i class="fas fa-chevron-right"></i>
                         </button>
-                        <button class="btn btn-dark delete" type="button" id="lastPageBtnMembers" data-toggle="tooltip"
+                        <button class="btn btn-dark delete" type="button" id="lastPageBtnHistory" data-toggle="tooltip"
                                 data-placement="top" title="Utolsó oldal.">
                             <i class="fas fa-angle-double-right"></i>
                         </button>
                     </div>
                 </form>
-                <table id="membersTable" class="table table-md table-dark">
+                <table id="historyTable" class="table table-md table-dark">
                     <thead>
                     <tr>
                         <th>Azonosító szám</th>
-                        <th>Név</th>
-                        <th>E-mail cím</th>
-                        <th>Születési dátum</th>
-                        <th>Lakcím</th>
-                        <th></th>
+                        <th>Verseny megnevezése</th>
+                        <th>Dátum</th>
+                        <th>Csapat név</th>
+                        <th>Játékosok neve</th>
+                        <th>Játékosok beceneve</th>
+                        <th>Élő közvetítés linkje</th>
+                        <th>Középvezető neve</th>
+                        <th>Elért helyezés</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -122,64 +133,59 @@
 
 
 <!-- The Modal -->
-<div class="modal fade" id="addMemberModal">
+<div class="modal fade" id="addHistoryModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Új tag hozzáadása</h5>
+                <h5 class="modal-title">Új verseny hozzáadása</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form id="memberForm">
+                <form id="historyForm">
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberName" placeholder="Név"
-                               required>
+                        <input type="text" class="col-sm-12" name="newCompetitionName" placeholder="Verseny megnevezése" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberAddress" placeholder="Lakcím" required>
+                        <input type="date" class="col-sm-12" name="newPlayDate" placeholder="Dátum" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberMail" placeholder="Játékos e-mail címe" required>
+                        <input type="text" class="col-sm-12" name="newTeamName" placeholder="Csapat név" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberBirthDate" placeholder="Játékos születési dátuma" required>
+                        <input type="text" class="col-sm-12" name="newPlayersName" placeholder="Játékosok neve" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberGuardianName" placeholder="Gondviselő neve" required>
+                        <input type="text" class="col-sm-12" name="newPlayersNickname" placeholder="Játékosok beceneve" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberGuardianMail" placeholder="Gondviselő e-mail címe" required>
+                        <input type="text" class="col-sm-12" name="newStreamLink" placeholder="Élő közvetítés linkje" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberGameName" placeholder="Játék neve" required>
+                        <input type="text" class="col-sm-12" name="newLeaderName" placeholder="Középvezető neve" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberInGameNickname" placeholder="Játékbeli becenév" required>
+                        <input type="number" class="col-sm-12" name="newPlace" placeholder="Elért helyezés" required>
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberStatus" placeholder="Játékos státusza" required>
-                    </div>
-
-                    <input type="submit" style="display: none" id="fakeMemberSubmit">
+                    <input type="submit" style="display: none" id="fakeHistorySubmit">
                 </form>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Bezár</button>
-                <button type="button" id="addMemberToDB" class="btn btn-success">Hozzáadás</button>
+                <button type="button" id="addHistoryToDB" class="btn btn-success">Hozzáadás</button>
             </div>
 
         </div>
@@ -187,64 +193,59 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal fade" id="editMemberModal">
+<div class="modal fade" id="editHistoryModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Kiválasztott tag adatainak módosítása</h5>
+                <h5 class="modal-title">Kiválasztott verseny adatainak módosítása</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form id="memberEditForm">
+                <form id="historyEditForm">
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberName" placeholder="Név"
-                               required>
+                        <input type="text" class="col-sm-12" name="editCompetitionName" placeholder="Verseny megnevezése" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberAddress" placeholder="Lakcím" required>
+                        <input type="date" class="col-sm-12" name="editPlayDate" placeholder="Dátum" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberMail" placeholder="Játékos e-mail címe" required>
+                        <input type="text" class="col-sm-12" name="editTeamName" placeholder="Csapat név" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberBirthDate" placeholder="Játékos születési dátuma" required>
+                        <input type="text" class="col-sm-12" name="editPlayersName" placeholder="Játékosok neve" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberGuardianName" placeholder="Gondviselő neve" required>
+                        <input type="text" class="col-sm-12" name="editPlayersNickname" placeholder="Játékosok beceneve" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberGuardianMail" placeholder="Gondviselő e-mail címe" required>
+                        <input type="text" class="col-sm-12" name="editStreamLink" placeholder="Élő közvetítés linkje" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberGameName" placeholder="Játék neve" required>
+                        <input type="text" class="col-sm-12" name="editLeaderName" placeholder="Középvezető neve" required>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberInGameNickname" placeholder="Játékbeli becenév" required>
+                        <input type="number" class="col-sm-12" name="editPlace" placeholder="Elért helyezés" required>
                     </div>
 
-                    <div class="form-group">
-                        <input type="text" class="col-sm-12" name="newMemberStatus" placeholder="Játékos státusza" required>
-                    </div>
-
-                    <input type="submit" style="display: none" id="fakeEditMemberSubmit">
+                    <input type="submit" style="display: none" id="fakeEditHistorySubmit">
                 </form>
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Bezár</button>
-                <button type="button" class="btn btn-primary" id="editMemberSubmit">Módosít</button>
+                <button type="button" class="btn btn-primary" id="editHistorySubmit">Módosít</button>
             </div>
 
         </div>
@@ -252,13 +253,13 @@
 </div>
 
 <!-- The Modal -->
-<div class="modal fade" id="deletePersonModal">
+<div class="modal fade" id="deleteHistoryModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h5 class="modal-title">Tag tölése</h5>
+                <h5 class="modal-title">Verseny tölése</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -270,7 +271,7 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Bezár</button>
-                <button type="button" class="btn btn-danger" id="deletePersonSubmit">Törlés</button>
+                <button type="button" class="btn btn-danger" id="deleteHistorySubmit">Törlés</button>
             </div>
 
         </div>

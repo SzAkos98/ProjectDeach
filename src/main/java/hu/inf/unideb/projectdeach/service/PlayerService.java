@@ -23,13 +23,13 @@ public class PlayerService {
     }
 
     public ResponseDTO addPlayer(Player res) {
-        Long id = playerRepository.save(res).getPlayerId();
+        Long id = playerRepository.save(res).getId();
         return new ResponseDTO(id, "Játékos sikeresen hozzáadva.");
     }
 
     public ResponseDTO updatePlayer(Long playerId, Player res) {
         if (playerRepository.existsById(playerId)) {
-            res.setPlayerId(playerId);
+            res.setId(playerId);
             playerRepository.save(res);
             return new ResponseDTO(playerId,"Játékos adatai sikeresen frissítve.");
         } else {

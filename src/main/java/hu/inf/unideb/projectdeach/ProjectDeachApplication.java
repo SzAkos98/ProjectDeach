@@ -9,6 +9,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
@@ -31,13 +32,13 @@ public class ProjectDeachApplication {
 
     @Bean
     public DataSource dataSource() throws IOException {
-        return DataSourceBuilder.create()
+        return DataSourceBuilder
+                .create()
                 .driverClassName(PropertiesUtils.getProperty("hibernate.connection.driver_class"))
                 .username(PropertiesUtils.getProperty("hibernate.connection.username"))
                 .password(PropertiesUtils.getProperty("hibernate.connection.password"))
                 .url(PropertiesUtils.getProperty("hibernate.connection.url")).build();
     }
-
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter bean = new HibernateJpaVendorAdapter();
@@ -46,9 +47,17 @@ public class ProjectDeachApplication {
         bean.setShowSql(true);
         return bean;
     }
-
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        return new JpaTransactionManager(entityManagerFactory);
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
+                                                                       JpaVendorAdapter jpaVendorAdapter) {
+        LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setJpaVendorAdapter(jpaVendorAdapter);
+        bean.setPackagesToScan("hu.inf.unideb.projectdeach.model");
+        return bean;
+    }
+    @Bean
+    public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+        return new JpaTransactionManager(emf);
     }
 }

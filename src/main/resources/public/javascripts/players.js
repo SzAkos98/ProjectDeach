@@ -36,6 +36,10 @@ function bindMenu(){
         showMemberActions();
     });
 
+    $("#historymenu").parent().on("click", function () {
+        window.location="history.html";
+    });
+
     $("#firstPageBtnMembers").on("click", function () {
         hideAll();
         $("#members").show();
@@ -165,7 +169,7 @@ function getPersonCount(){
 function performgetBC(){
     var defered = jQuery.Deferred();
     var jqxhr = $.ajax( {
-        url: host+context+"/membercount",
+        url: host+context+"/playercount",
         method: "GET"
     } )
         .done(function(data) {
@@ -237,7 +241,7 @@ function updateMemberTable($table){
                 .append($("<td>").addClass("td-playerMail")
                     .text(value.playerMail))
                 .append($("<td>").addClass("td-birthDate")
-                    .text(value.birthDate))
+                    .text(value.playerBirthDate))
                 .append($("<td>").addClass("td-guardianName")
                     .text(value.guardianName))
                 .append($("<td>").addClass("td-guardianMail")
@@ -247,18 +251,17 @@ function updateMemberTable($table){
                 .append($("<td>").addClass("td-inGameNickname")
                     .text(value.inGameNickname))
                 .append($("<td>").addClass("td-playerStatus")
-                    .text(value.playerStatus)));
+                    .text(value.playerState)));
 
     });
     bindSelections();
-    bindInfoButtons();
 }
 
 
 function performFetchMembers() {
     var defered = jQuery.Deferred();
     var jqxhr = $.ajax( {
-        url: host+context+"/players?page="+pageNumPerson,
+        url: host+context+ "/players?page="+pageNumPerson,
         method: "GET"
     } )
         .done(function(data) {
@@ -286,19 +289,19 @@ function fetchMembers() {
 function performAddPerson() {
     var defered = jQuery.Deferred();
     var jqxhr = $.ajax( {
-        url: host+context+"/players",
+        url: host+context + "/players",
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify({
             "playerName": $("input[name=newMemberName]").val(),
             "playerAddress": $("input[name=newMemberAddress]").val(),
             "playerMail": $("input[name=newMemberMail]").val(),
-            "birthDate": $("input[name=newMemberBirthDate]").val(),
+            "playerBirthDate": $("input[name=newMemberBirthDate]").val(),
             "guardianName": $("input[name=newMemberGuardianName]").val(),
             "guardianMail": $("input[name=newMemberGuardianMail]").val(),
             "gameName" : $("input[name=newMemberGameName]").val(),
             "inGameNickname": $("input[name=newMemberInGameNickname]").val(),
-            "playerStatus": $("input[name=newMemberStatus]").val()
+            "playerState": $("input[name=newMemberStatus]").val()
         }),
         method: "POST"
     } )
@@ -316,7 +319,7 @@ function addPerson() {
         .done(function (data) {
             $.growl.notice({message: data.message, location: "br"});
             book = data;
-            loadMembersTable();
+            window.location="players.html";
             $("#addMemberModal").modal("hide");
         })
         .fail(function (err) {
@@ -325,33 +328,33 @@ function addPerson() {
 }
 
 function fillUpdatePerson() {
-    $("#memberEditForm input[name=newMemberName]").val($("#membersTable .selected .td-name").text());
-    $("#memberEditForm input[name=newMemberAddress]").val($("#membersTable .selected .td-address").text());
-    $("#memberEditForm input[name=newMemberMail]").val($("#membersTable .selected .td-playerMail").text());
-    $("#memberEditForm input[name=newMemberBirthDate]").val($("#membersTable .selected  .td-birthDate").text());
-    $("#memberEditForm input[name=newMemberGuardianName]").val($("#membersTable .selected  .td-guardianName").text());
-    $("#memberEditForm input[name=newMemberGuardianMail]").val($("#membersTable .selected  .td-guardianMail").text());
-    $("#memberEditForm input[name=newMemberGameName]").val($("#membersTable .selected  .td-gameName").text());
-    $("#memberEditForm input[name=newMemberInGameNickname]").val($("#membersTable .selected  .td-inGameNickname").text());
-    $("#memberEditForm input[name=newMemberStatus]").val($("#membersTable .selected  .td-playerStatus").text());
+    $("#memberEditForm input[name=editMemberName]").val($("#membersTable .selected .td-name").text());
+    $("#memberEditForm input[name=editMemberAddress]").val($("#membersTable .selected .td-address").text());
+    $("#memberEditForm input[name=editMemberMail]").val($("#membersTable .selected .td-playerMail").text());
+    $("#memberEditForm input[name=editMemberBirthDate]").val($("#membersTable .selected  .td-birthDate").text());
+    $("#memberEditForm input[name=editMemberGuardianName]").val($("#membersTable .selected  .td-guardianName").text());
+    $("#memberEditForm input[name=editMemberGuardianMail]").val($("#membersTable .selected  .td-guardianMail").text());
+    $("#memberEditForm input[name=editMemberGameName]").val($("#membersTable .selected  .td-gameName").text());
+    $("#memberEditForm input[name=editMemberInGameNickname]").val($("#membersTable .selected  .td-inGameNickname").text());
+    $("#memberEditForm input[name=editMemberStatus]").val($("#membersTable .selected  .td-playerStatus").text());
 }
 
 function updatePerson() {
     var defered = jQuery.Deferred();
     var jqxhr = $.ajax( {
-        url: host+context+"/players/"+$("#membersTable .selected .td-id").text(),
+        url: host+context+ "/players/" +$("#membersTable .selected .td-id").text(),
         processData: false,
         contentType: 'application/json',
         data: JSON.stringify({
-            "playerName": $("#memberEditForm input[name=newMemberName]").val(),
-            "playerAddress": $("#memberEditForm input[name=newMemberAddress]").val(),
-            "playerMail": $("#memberEditForm input[name=newMemberMail]").val(),
-            "birthDate": $("#memberEditForm input[name=newMemberBirthDate]").val(),
-            "guardianName": $("#memberEditForm input[name=newMemberGuardianName]").val(),
-            "guardianMail": $("#memberEditForm input[name=newMemberGuardianMail]").val(),
-            "gameName" : $("#memberEditForm input[name=newMemberGameName]").val(),
-            "inGameNickname": $("#memberEditForm input[name=newMemberInGameNickname]").val(),
-            "playerStatus": $("#memberEditForm input[name=newMemberStatus]").val()
+            "playerName": $("#memberEditForm input[name=editMemberName]").val(),
+            "playerAddress": $("#memberEditForm input[name=editMemberAddress]").val(),
+            "playerMail": $("#memberEditForm input[name=editMemberMail]").val(),
+            "playerBirthDate": $("#memberEditForm input[name=editMemberBirthDate]").val(),
+            "guardianName": $("#memberEditForm input[name=editMemberGuardianName]").val(),
+            "guardianMail": $("#memberEditForm input[name=editMemberGuardianMail]").val(),
+            "gameName" : $("#memberEditForm input[name=editMemberGameName]").val(),
+            "inGameNickname": $("#memberEditForm input[name=editMemberInGameNickname]").val(),
+            "playerState": $("#memberEditForm input[name=editMemberStatus]").val()
         }),
         method: "PUT"
     } )
@@ -380,7 +383,7 @@ function editMember() {
 function performDeletePerson() {
     var defered = jQuery.Deferred();
     var jqxhr = $.ajax( {
-        url: host+context+"/players/" + $("#membersTable .selected .td-id").text(),
+        url: host+context + "/players/"+ $("#membersTable .selected .td-id").text(),
         processData: false,
         method: "DELETE"
     } )
@@ -404,5 +407,3 @@ function deletePerson() {
             $.growl.error({ title: "HIBA!", message: err.responseJSON.message, location: "br"});
         });
 }
-
-

@@ -25,7 +25,7 @@ public class PlayerController {
     @JsonView(Views.FromPlayer.class)
     @GetMapping(value = "/players")
     public @ResponseBody
-    PlayerList fetchAll(@RequestParam String page) {
+    PlayerList fetchAllPlayers(@RequestParam String page) {
         return playerService.getPlayers(page);
     }
 
@@ -34,7 +34,7 @@ public class PlayerController {
         return playerService.getCount();
     }
 
-    @PostMapping(value = "/players", consumes = "applicaton/json", produces = "application/json")
+    @PostMapping(value = "/players", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO addNewPlayer(@RequestBody PlayerDTO res) {
         return playerService.addPlayer(modelMapper.map(res, Player.class));

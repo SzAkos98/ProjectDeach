@@ -8,4 +8,7 @@ public class Views {
     public static class FromPlayer extends Base{
     }
 
+    public static class FromHistory extends Base{
+    }
+
 }
